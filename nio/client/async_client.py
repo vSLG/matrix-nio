@@ -1455,17 +1455,16 @@ class AsyncClient(Client):
             if room.encrypted:
                 # Check if the members are synced, otherwise users might not get
                 # the megolm seession.
-                print("Members synced:", room.members_synced)
+                print("room_send: members synced:", room.members_synced)
                 if not room.members_synced:
                     responses = []
                     responses.append(await self.joined_members(room_id))
-                    print("Joined members response:", responses[0])
+                    print("room_send: members response:", type(responses[0]))
 
                     if self.should_query_keys:
                         responses.append(await self.keys_query())
-                        print("Keys query response", responses[1])
 
-                    print("Members synced 2:", room.members_synced)
+                    print("room_send: members synced 2:", room.members_synced)
 
                 # Check if we need to share a group session, it might have been
                 # invalidated or expired.

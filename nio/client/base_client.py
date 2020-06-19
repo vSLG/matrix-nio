@@ -979,6 +979,7 @@ class Client:
 
     def _handle_joined_members(self, response: JoinedMembersResponse):
         if response.room_id not in self.rooms:
+            print("_handle_joined_members: room id not in self.rooms")
             return
 
         room = self.rooms[response.room_id]
@@ -987,6 +988,7 @@ class Client:
             room.add_member(
                 member.user_id, member.display_name, member.avatar_url
             )
+        print("_handle_joined_members: members added: ", len(response.members))
 
         if room.encrypted and self.olm is not None:
             self.olm.update_tracked_users(room)

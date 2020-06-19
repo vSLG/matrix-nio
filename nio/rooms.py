@@ -449,8 +449,10 @@ class MatrixRoom:
         try:
             _, joined, invited = self._summary_details()
         except ValueError:
+            print("members_synced: unusable summary, return True")
             return True
 
+        print("members_synced: ", joined, invited, len(self.users))
         return joined + invited == len(self.users)
 
     @property
