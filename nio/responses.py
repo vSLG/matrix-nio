@@ -110,6 +110,8 @@ __all__ = [
     "RoomUnbanResponse",
     "RoomUnbanError",
     "Rooms",
+    "SetPushRuleError",
+    "SetPushRuleResponse",
     "ShareGroupSessionResponse",
     "ShareGroupSessionError",
     "SyncResponse",
@@ -1784,3 +1786,14 @@ class UploadFilterResponse(Response):
         cls, parsed_dict: Dict[Any, Any],
     ) -> Union["UploadFilterResponse", UploadFilterError]:
         return cls(parsed_dict["filter_id"])
+
+
+@dataclass
+class SetPushRuleResponse(EmptyResponse):
+    @staticmethod
+    def create_error(parsed_dict: Dict[str, Any]):
+        return SetPushRuleError.from_dict(parsed_dict)
+
+
+class SetPushRuleError(ErrorResponse):
+    pass
