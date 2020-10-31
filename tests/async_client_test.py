@@ -23,6 +23,7 @@ from nio import (ContentRepositoryConfigResponse,
                  DeletePushRuleResponse,
                  DiscoveryInfoError, DiscoveryInfoResponse,
                  DownloadResponse, ErrorResponse,
+                 EnablePushRuleResponse,
                  GroupEncryptionError,
                  JoinResponse, JoinedRoomsResponse,
                  JoinedMembersResponse, KeysClaimResponse, KeysQueryResponse,
@@ -4263,3 +4264,22 @@ class TestClass:
             "global", PushRuleKind.override, "foo",
         )
         assert isinstance(resp, DeletePushRuleResponse)
+
+    async def test_enable_pushrule(self, async_client, aioresponse):
+        await async_client.receive_response(
+            LoginResponse.from_dict(self.login_response),
+        )
+        assert async_client.logged_in
+
+        aioresponse.put(
+            "https://example.org/_matrix/client/r0/pushrules/"
+            "global/override/foo/enabled?access_token=abc123",
+            body={"enabled": True},
+            status=200,
+            payload={},
+        )
+
+        resp = await async_client.enable_pushrule(
+            "global", PushRuleKind.override, "foo", enable=True,
+        )
+        assert isinstance(resp, EnablePushRuleResponse)
