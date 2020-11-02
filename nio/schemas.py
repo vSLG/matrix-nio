@@ -996,6 +996,14 @@ class Schemas:
                         },
                         "additionalProperties": False,
                     },
+                    "notifications": {
+                        "type": "object",
+                        "default": {},
+                        "properties": {
+                            "room": {"type": "integer", "default": 50},
+                        },
+                        "additionalProperties": {"type": "integer"},
+                    },
                 },
             },
         },
