@@ -839,6 +839,7 @@ class TestClass:
 
         assert rules.global_rules.override == [
             PushRule(
+                kind = PushRuleKind.override,
                 id = ".m.rule.suppress_notices",
                 default = True,
                 enabled = False,
@@ -849,6 +850,7 @@ class TestClass:
 
         assert rules.global_rules.content == [
             PushRule(
+                kind = PushRuleKind.content,
                 id = ".m.rule.contains_user_name",
                 default = True,
                 pattern = "alice",
@@ -866,6 +868,7 @@ class TestClass:
 
         assert rules.global_rules.underride == [
             PushRule(
+                kind = PushRuleKind.underride,
                 id = ".m.rule.special_call",
                 default = True,
                 conditions = [
@@ -879,6 +882,7 @@ class TestClass:
                 ],
             ),
             PushRule(
+                kind = PushRuleKind.underride,
                 id = ".m.rule.room_less_than_10_room_perm",
                 default = True,
                 conditions = [
@@ -889,6 +893,7 @@ class TestClass:
                 actions = [PushNotify()],
             ),
             PushRule(
+                kind = PushRuleKind.underride,
                 id = ".m.rule.room_one_to_one",
                 default = True,
                 conditions = [
