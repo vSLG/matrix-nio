@@ -1,4 +1,7 @@
+import os
+
 from functools import wraps
+from pathlib import Path
 from typing import Any, Iterator, List, Optional
 
 from atomicwrites import atomic_write
@@ -75,7 +78,13 @@ class Ed25519Key(Key):
 class KeyStore:
     def __init__(self, filename: str):
         self._entries: List[Key] = []
-        self._filename: str = filename
+
+        path = Path(filename).absolute().as_uri().replace("file://", "")
+
+        if os.name == "nt":
+            path = path[1:] # Cut leading / on /C:/path/...
+
+        self._filename: str = path
 
         self._load(filename)
 
